@@ -1,159 +1,55 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>マスター農園 | 農業活動報告</title>
-    <meta name="description" content="マスター農園の栽培状況、作付け面積、収穫体験を確認できる農業活動報告サイト。">
-    <link rel="stylesheet" href="assets/styles.css">
-    <script src="assets/app.js" defer></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Maison Nekoは、高級ホテルのラウンジのような静けさと猫の気配を楽しむ架空の猫カフェです。"
+    />
+    <title>Maison Neko | 静謐な猫のラウンジ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              porcelain: "#F8F7F3",
+              ivory: "#FFFFFF",
+              ink: "#1F2423",
+              mist: "#777C78",
+              champagne: "#B89B5E",
+              moss: "#31433A",
+              rosewood: "#7C4E4A",
+              stone: "#E6E2DA",
+            },
+            fontFamily: {
+              serif: ['"Cormorant Garamond"', "serif"],
+              sans: ['"Noto Sans JP"', "system-ui", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 24px 80px rgba(31, 36, 35, 0.12)",
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./src/styles.css" />
   </head>
-  <body>
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="マスター農園 ホーム">
-        <span class="brand-mark"></span>
-        <span>マスター農園</span>
-      </a>
-      <nav class="site-nav" aria-label="メインナビゲーション">
-        <a href="index.html" aria-current="page">活動報告</a>
-        <a href="reservation.html">予約</a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero report-hero">
-        <img src="assets/hero-farm.png" alt="朝の光が差す野菜畑と農園の風景">
-        <div class="hero-shade"></div>
-        <div class="hero-content">
-          <p class="eyebrow">Master Farm Report</p>
-          <h1>マスター農園</h1>
-          <div class="crop-picker" aria-label="栽培中の野菜">
-            <button type="button" class="crop-chip is-active" data-crop="tomato">トマト</button>
-            <button type="button" class="crop-chip" data-crop="eggplant">ナス</button>
-            <button type="button" class="crop-chip" data-crop="pepper">ピーマン</button>
-            <button type="button" class="crop-chip" data-crop="lettuce">レタス</button>
-            <button type="button" class="crop-chip" data-crop="onion">玉ねぎ</button>
-            <button type="button" class="crop-chip" data-crop="snappea">スナップえんどう</button>
-          </div>
-          <p class="hero-copy">栽培中の野菜を選ぶと、現在の進捗と作付け面積を確認できます。活動報告と予約ページもあわせて管理できます。</p>
-          <div class="hero-actions">
-            <a class="button primary" href="reservation.html">体験を予約する</a>
-            <a class="button ghost" href="#crop-status">作付け状況を見る</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section crop-status-section" id="crop-status">
-        <div class="section-heading">
-          <p class="eyebrow dark">Crop Status</p>
-          <h2>現在の作付け状況</h2>
-        </div>
-        <article class="crop-detail" aria-live="polite">
-          <div>
-            <p class="crop-label">選択中の野菜</p>
-            <h3 id="cropName">トマト</h3>
-            <p id="cropSummary">苗の活着を確認しながら、支柱立てと潅水量の調整を進めています。</p>
-          </div>
-          <div class="crop-stats">
-            <div>
-              <span class="stat-label">現在の進捗</span>
-              <strong id="cropProgress">定植後・育成初期</strong>
-            </div>
-            <div>
-              <span class="stat-label">作付け面積</span>
-              <strong id="cropArea">0.45ha</strong>
-            </div>
-            <div>
-              <span class="stat-label">収穫予定</span>
-              <strong id="cropHarvest">6月中旬</strong>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="metrics" aria-label="活動実績">
-        <div>
-          <span class="metric-value">26</span>
-          <span class="metric-label">今季の活動日</span>
-        </div>
-        <div>
-          <span class="metric-value">8.4t</span>
-          <span class="metric-label">収穫量</span>
-        </div>
-        <div>
-          <span class="metric-value">312</span>
-          <span class="metric-label">体験参加者</span>
-        </div>
-        <div>
-          <span class="metric-value">14</span>
-          <span class="metric-label">地域連携企画</span>
-        </div>
-      </section>
-
-      <section class="section intro">
-        <div>
-          <p class="eyebrow dark">Our Focus</p>
-          <h2>土づくりから収穫体験まで、活動の流れが見えるサイト。</h2>
-        </div>
-        <p>日々の作業内容、育成状況、参加型イベントを1つの報告ページに整理。予約ページでは、収穫体験・畑見学・農作業ワークショップの希望日時を選べます。</p>
-      </section>
-
-      <section class="section report-grid" id="reports" aria-label="最新の活動報告">
-        <article class="report-card featured">
-          <div class="card-kicker">2026.04.24</div>
-          <h3>春野菜の定植と畝のメンテナンス</h3>
-          <p>トマト、ナス、ピーマンの苗を定植。朝晩の温度差に備えて、トンネル資材と潅水ラインを調整しました。</p>
-          <dl>
-            <div><dt>作業面積</dt><dd>1.2ha</dd></div>
-            <div><dt>参加人数</dt><dd>18名</dd></div>
-          </dl>
-        </article>
-        <article class="report-card">
-          <div class="card-kicker">2026.04.18</div>
-          <h3>親子向け収穫体験を開催</h3>
-          <p>スナップえんどうと新玉ねぎの収穫体験を実施。畑の観察メモを使って、野菜の生長も学びました。</p>
-        </article>
-        <article class="report-card">
-          <div class="card-kicker">2026.04.11</div>
-          <h3>堆肥散布と土壌チェック</h3>
-          <p>有機質の補給とpH確認を行い、次作に向けて土の状態を整えました。</p>
-        </article>
-        <article class="report-card">
-          <div class="card-kicker">2026.04.03</div>
-          <h3>地域飲食店との出荷打ち合わせ</h3>
-          <p>旬の葉物野菜を中心に、メニューに合わせた収穫タイミングを調整しました。</p>
-        </article>
-      </section>
-
-      <section class="section timeline-section">
-        <div class="section-heading">
-          <p class="eyebrow dark">Monthly Flow</p>
-          <h2>4月の活動タイムライン</h2>
-        </div>
-        <ol class="timeline">
-          <li>
-            <time>第1週</time>
-            <span>苗床管理、播種、春作の圃場準備</span>
-          </li>
-          <li>
-            <time>第2週</time>
-            <span>土壌検査、堆肥散布、畝立て</span>
-          </li>
-          <li>
-            <time>第3週</time>
-            <span>収穫体験、出荷調整、地域イベント</span>
-          </li>
-          <li>
-            <time>第4週</time>
-            <span>定植、潅水設備点検、次月計画</span>
-          </li>
-        </ol>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <p>マスター農園</p>
-      <a href="reservation.html">予約ページへ</a>
-    </footer>
+  <body class="bg-porcelain font-sans text-ink antialiased">
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" src="./src/content.js"></script>
+    <script type="text/babel" src="./src/App.jsx"></script>
+    <script type="text/babel" src="./src/main.jsx"></script>
   </body>
 </html>

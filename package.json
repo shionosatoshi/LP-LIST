@@ -1,0 +1,12 @@
+{
+  "name": "maison-neko-react-lp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/static-server.cjs",
+    "preview": "node scripts/static-server.cjs"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

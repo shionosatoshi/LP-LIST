@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>予約 | マスター農園</title>
-    <meta name="description" content="マスター農園の農業体験、畑見学、収穫体験の予約ページ。">
+    <title>予約 | Maison Neko</title>
+    <meta name="description" content="Maison Nekoの予約ページです。静謐なラウンジで猫の気配を楽しむ滞在プラン、人数、希望日時を選べます。">
     <link rel="stylesheet" href="assets/styles.css">
     <script src="assets/app.js" defer></script>
   </head>
   <body>
     <header class="site-header solid">
-      <a class="brand" href="index.html" aria-label="マスター農園 ホーム">
-        <span class="brand-mark"></span>
-        <span>マスター農園</span>
+      <a class="brand" href="index.html" aria-label="Maison Neko ホーム">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Maison Neko</span>
       </a>
       <nav class="site-nav" aria-label="メインナビゲーション">
-        <a href="index.html">活動報告</a>
+        <a href="index.html">Concept</a>
         <a href="reservation.html" aria-current="page">予約</a>
       </nav>
     </header>
@@ -23,30 +23,31 @@
     <main>
       <section class="page-title">
         <p class="eyebrow dark">Reservation</p>
-        <h1>農業体験の予約</h1>
-        <p>収穫体験、畑見学、農作業ワークショップの希望内容を選んで送信できます。</p>
+        <h1>静かなラウンジの席を、少しだけ先に取っておく。</h1>
+        <p>猫たちの生活リズムと空間の静けさを守るため、入店枠は少なめです。滞在プランと希望日時を選んでお申し込みください。</p>
       </section>
 
       <section class="booking-layout">
         <aside class="booking-panel">
-          <h2>予約できる体験</h2>
+          <img src="assets/reservation-lounge.png" alt="猫が眠るラウンジ席とキャットステップのある店内">
+          <h2>Reservation Menu</h2>
           <ul class="experience-list">
             <li>
-              <span>収穫体験</span>
-              <strong>90分 / 2,000円</strong>
+              <span>Salon Seat</span>
+              <strong>90分 / 3,800円</strong>
             </li>
             <li>
-              <span>畑見学ツアー</span>
-              <strong>60分 / 1,200円</strong>
+              <span>Gallery Lounge</span>
+              <strong>120分 / 5,200円</strong>
             </li>
             <li>
-              <span>農作業ワークショップ</span>
-              <strong>120分 / 3,500円</strong>
+              <span>Private Pair</span>
+              <strong>90分 / 8,800円</strong>
             </li>
           </ul>
           <div class="notice">
-            <strong>開催時間</strong>
-            <p>午前 10:00 / 午後 14:00。雨天時は前日18時までに連絡します。</p>
+            <strong>営業時間</strong>
+            <p>11:00から19:00まで。猫の休憩時間として15:00から15:30は入店を止めています。</p>
           </div>
         </aside>
 
@@ -54,7 +55,7 @@
           <div class="field-grid">
             <label>
               お名前
-              <input type="text" name="name" autocomplete="name" required placeholder="山田 太郎">
+              <input type="text" name="name" autocomplete="name" required placeholder="山田 まどか">
             </label>
             <label>
               メールアドレス
@@ -71,31 +72,33 @@
               希望時間
               <select name="time" required>
                 <option value="">選択してください</option>
-                <option>10:00</option>
-                <option>14:00</option>
+                <option>11:00</option>
+                <option>13:00</option>
+                <option>16:00</option>
+                <option>17:30</option>
               </select>
             </label>
           </div>
 
           <div class="field-grid">
             <label>
-              体験内容
+              プラン
               <select name="experience" required>
                 <option value="">選択してください</option>
-                <option>収穫体験</option>
-                <option>畑見学ツアー</option>
-                <option>農作業ワークショップ</option>
+                <option>Salon Seat</option>
+                <option>Gallery Lounge</option>
+                <option>Private Pair</option>
               </select>
             </label>
             <label>
-              参加人数
-              <input type="number" name="guests" min="1" max="12" value="2" required>
+              人数
+              <input type="number" name="guests" min="1" max="4" value="2" required>
             </label>
           </div>
 
           <label>
             ご要望
-            <textarea name="message" rows="5" placeholder="小さなお子さまの参加、アレルギー、交通手段など"></textarea>
+            <textarea name="message" rows="5" placeholder="アレルギー、静かな席の希望、お子さまの年齢など"></textarea>
           </label>
 
           <button class="button primary full" type="submit">予約内容を送信</button>
@@ -106,8 +109,8 @@
     </main>
 
     <footer class="site-footer">
-      <p>マスター農園</p>
-      <a href="index.html">活動報告へ戻る</a>
+      <p>Maison Neko</p>
+      <a href="index.html">Conceptへ戻る</a>
     </footer>
   </body>
 </html>

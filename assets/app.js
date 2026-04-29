@@ -1,69 +1,55 @@
-const cropData = {
-  tomato: {
-    name: "トマト",
-    progress: "定植後・育成初期",
-    area: "0.45ha",
-    harvest: "6月中旬",
-    summary: "苗の活着を確認しながら、支柱立てと潅水量の調整を進めています。"
+const catData = {
+  mugi: {
+    name: "Mugi",
+    place: "窓辺の席",
+    mood: "そっと近い",
+    charm: "丸い寝顔",
+    summary: "窓辺のクッションが定位置。眠そうな顔で店内を見渡し、気が向くと足元にすっと座ります。"
   },
-  eggplant: {
-    name: "ナス",
-    progress: "定植準備中",
-    area: "0.32ha",
-    harvest: "6月下旬",
-    summary: "畝立てと元肥の調整が完了し、気温を見ながら定植タイミングを調整しています。"
+  shiro: {
+    name: "Shiro",
+    place: "本棚の上",
+    mood: "気まぐれ",
+    charm: "青い瞳",
+    summary: "高い場所から店内を見守る白猫。名前を呼ばれるより、静かなページの音に反応します。"
   },
-  pepper: {
-    name: "ピーマン",
-    progress: "苗育成中",
-    area: "0.28ha",
-    harvest: "7月上旬",
-    summary: "ハウス内で苗を管理し、葉色と根張りを確認しながら圃場への移植準備を進めています。"
+  suzume: {
+    name: "Suzume",
+    place: "丸椅子の下",
+    mood: "慎重派",
+    charm: "小さな足音",
+    summary: "少し離れた場所から人を観察するのが好き。慣れると椅子のそばで小さく喉を鳴らします。"
   },
-  lettuce: {
-    name: "レタス",
-    progress: "収穫前チェック",
-    area: "0.36ha",
-    harvest: "5月上旬",
-    summary: "結球の状態が安定してきたため、出荷サイズと収穫順の確認を行っています。"
-  },
-  onion: {
-    name: "玉ねぎ",
-    progress: "肥大期",
-    area: "0.52ha",
-    harvest: "5月下旬",
-    summary: "球の肥大が進んでいます。倒伏の兆候と土壌水分を見ながら収穫時期を判断します。"
-  },
-  snappea: {
-    name: "スナップえんどう",
-    progress: "収穫中",
-    area: "0.18ha",
-    harvest: "収穫中",
-    summary: "莢の張りを見ながら朝採りを実施しています。体験収穫でも案内しやすい状態です。"
+  kohaku: {
+    name: "Kohaku",
+    place: "受付横",
+    mood: "人なつこい",
+    charm: "しっぽの返事",
+    summary: "お客さまの入店をゆっくり確認する案内役。撫でられるより、近くで話を聞くのが得意です。"
   }
 };
 
-const cropButtons = document.querySelectorAll(".crop-chip");
-const cropName = document.querySelector("#cropName");
-const cropProgress = document.querySelector("#cropProgress");
-const cropArea = document.querySelector("#cropArea");
-const cropHarvest = document.querySelector("#cropHarvest");
-const cropSummary = document.querySelector("#cropSummary");
+const catButtons = document.querySelectorAll(".cat-chip");
+const catName = document.querySelector("#catName");
+const catPlace = document.querySelector("#catPlace");
+const catMood = document.querySelector("#catMood");
+const catCharm = document.querySelector("#catCharm");
+const catSummary = document.querySelector("#catSummary");
 
-if (cropButtons.length && cropName && cropProgress && cropArea && cropHarvest && cropSummary) {
-  cropButtons.forEach((button) => {
+if (catButtons.length && catName && catPlace && catMood && catCharm && catSummary) {
+  catButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      const selected = cropData[button.dataset.crop];
+      const selected = catData[button.dataset.cat];
       if (!selected) return;
 
-      cropButtons.forEach((item) => item.classList.remove("is-active"));
+      catButtons.forEach((item) => item.classList.remove("is-active"));
       button.classList.add("is-active");
 
-      cropName.textContent = selected.name;
-      cropProgress.textContent = selected.progress;
-      cropArea.textContent = selected.area;
-      cropHarvest.textContent = selected.harvest;
-      cropSummary.textContent = selected.summary;
+      catName.textContent = selected.name;
+      catPlace.textContent = selected.place;
+      catMood.textContent = selected.mood;
+      catCharm.textContent = selected.charm;
+      catSummary.textContent = selected.summary;
     });
   });
 }
@@ -82,7 +68,7 @@ if (form && result) {
     const data = new FormData(form);
     const booking = Object.fromEntries(data.entries());
 
-    localStorage.setItem("masterFarmLatestBooking", JSON.stringify({
+    localStorage.setItem("maisonNekoLatestBooking", JSON.stringify({
       ...booking,
       submittedAt: new Date().toISOString()
     }));
