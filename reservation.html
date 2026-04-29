@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>予約 | マスター農園</title>
+    <meta name="description" content="マスター農園の農業体験、畑見学、収穫体験の予約ページ。">
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header solid">
+      <a class="brand" href="index.html" aria-label="マスター農園 ホーム">
+        <span class="brand-mark"></span>
+        <span>マスター農園</span>
+      </a>
+      <nav class="site-nav" aria-label="メインナビゲーション">
+        <a href="index.html">活動報告</a>
+        <a href="reservation.html" aria-current="page">予約</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-title">
+        <p class="eyebrow dark">Reservation</p>
+        <h1>農業体験の予約</h1>
+        <p>収穫体験、畑見学、農作業ワークショップの希望内容を選んで送信できます。</p>
+      </section>
+
+      <section class="booking-layout">
+        <aside class="booking-panel">
+          <h2>予約できる体験</h2>
+          <ul class="experience-list">
+            <li>
+              <span>収穫体験</span>
+              <strong>90分 / 2,000円</strong>
+            </li>
+            <li>
+              <span>畑見学ツアー</span>
+              <strong>60分 / 1,200円</strong>
+            </li>
+            <li>
+              <span>農作業ワークショップ</span>
+              <strong>120分 / 3,500円</strong>
+            </li>
+          </ul>
+          <div class="notice">
+            <strong>開催時間</strong>
+            <p>午前 10:00 / 午後 14:00。雨天時は前日18時までに連絡します。</p>
+          </div>
+        </aside>
+
+        <form class="reservation-form" id="reservationForm">
+          <div class="field-grid">
+            <label>
+              お名前
+              <input type="text" name="name" autocomplete="name" required placeholder="山田 太郎">
+            </label>
+            <label>
+              メールアドレス
+              <input type="email" name="email" autocomplete="email" required placeholder="example@mail.com">
+            </label>
+          </div>
+
+          <div class="field-grid">
+            <label>
+              希望日
+              <input type="date" name="date" required>
+            </label>
+            <label>
+              希望時間
+              <select name="time" required>
+                <option value="">選択してください</option>
+                <option>10:00</option>
+                <option>14:00</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="field-grid">
+            <label>
+              体験内容
+              <select name="experience" required>
+                <option value="">選択してください</option>
+                <option>収穫体験</option>
+                <option>畑見学ツアー</option>
+                <option>農作業ワークショップ</option>
+              </select>
+            </label>
+            <label>
+              参加人数
+              <input type="number" name="guests" min="1" max="12" value="2" required>
+            </label>
+          </div>
+
+          <label>
+            ご要望
+            <textarea name="message" rows="5" placeholder="小さなお子さまの参加、アレルギー、交通手段など"></textarea>
+          </label>
+
+          <button class="button primary full" type="submit">予約内容を送信</button>
+          <p class="form-note">送信後、この画面に予約内容の控えが表示されます。</p>
+          <div class="form-result" id="formResult" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>マスター農園</p>
+      <a href="index.html">活動報告へ戻る</a>
+    </footer>
+  </body>
+</html>
