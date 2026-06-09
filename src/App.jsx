@@ -1,32 +1,57 @@
 const {
+  checklist,
+  emergency,
   hero,
+  metrics,
   navigation,
-  philosophy,
-  reservation,
-  residentCats,
-  service,
-  stats,
-  toneManner,
-} = window.MaisonNekoContent;
+  quickStart,
+  savingCards,
+  sections,
+} = window.SummerSavingContent;
+
+const accentClass = {
+  aqua: "border-aqua/40 bg-aqua/10 text-aqua",
+  leaf: "border-leaf/40 bg-leaf/10 text-leaf",
+  coral: "border-coral/40 bg-coral/10 text-coral",
+  night: "border-night/40 bg-night/10 text-night",
+};
 
 function App() {
-  const [activeCat, setActiveCat] = React.useState(residentCats[0]);
-  const [reservationStatus, setReservationStatus] = React.useState("");
+  const [doneItems, setDoneItems] = React.useState(() => {
+    try {
+      const savedItems = window.localStorage.getItem("summerSavingChecklist");
+      const parsedItems = savedItems ? JSON.parse(savedItems) : [];
+      return Array.isArray(parsedItems) ? parsedItems.filter((item) => checklist.includes(item)) : [];
+    } catch (error) {
+      return [];
+    }
+  });
 
-  function handleReservationSubmit(event) {
-    event.preventDefault();
-    setReservationStatus("予約リクエストを受け付けました。静かな確認キューでお席をお預かりします。");
+  React.useEffect(() => {
+    try {
+      window.localStorage.setItem("summerSavingChecklist", JSON.stringify(doneItems));
+    } catch (error) {
+      // The checklist still works during this session if storage is unavailable.
+    }
+  }, [doneItems]);
+
+  function toggleChecklist(item) {
+    setDoneItems((current) =>
+      current.includes(item) ? current.filter((value) => value !== item) : [...current, item]
+    );
   }
 
+  const progress = Math.round((doneItems.length / checklist.length) * 100);
+
   return (
-    <div className="min-h-screen bg-porcelain text-ink">
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-ink/10 bg-porcelain/86 backdrop-blur-md">
+    <div className="min-h-screen bg-paper text-ink">
+      <header className="sticky top-0 z-40 border-b border-line/80 bg-paper/88 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-          <a href="#top" className="group flex items-center gap-3" aria-label="Maison Neko ホーム">
-            <span className="h-px w-8 bg-champagne transition-all group-hover:w-10" aria-hidden="true" />
-            <span className="font-serif text-lg tracking-[0.18em] text-ink">Maison Neko</span>
+          <a href="#top" className="flex items-center gap-3 font-black tracking-wide">
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-lemon text-ink">涼</span>
+            <span>夏の節約術</span>
           </a>
-          <nav className="hidden items-center gap-8 text-xs uppercase tracking-[0.2em] text-ink/70 md:flex">
+          <nav className="hidden items-center gap-6 text-sm font-bold text-muted md:flex">
             {navigation.map((item) => (
               <a key={item.href} className="transition hover:text-ink" href={item.href}>
                 {item.label}
@@ -37,217 +62,152 @@ function App() {
       </header>
 
       <main id="top">
-        <section className="relative flex min-h-[92vh] items-end overflow-hidden bg-ivory pt-28">
-          <img
-            className="hero-image absolute inset-0 h-full w-full object-cover object-center"
-            src={hero.image}
-            alt="白いホテルラウンジのような空間で猫が静かに佇んでいる"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-porcelain via-porcelain/62 to-porcelain/14" />
-          <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 sm:px-8 lg:pb-24">
-            <div className="reveal max-w-5xl">
-              <p className="mb-5 text-xs uppercase tracking-[0.32em] text-rosewood">{hero.eyebrow}</p>
-              <h1 className="font-serif text-5xl leading-none text-black sm:text-7xl lg:whitespace-nowrap lg:text-8xl xl:text-9xl">
+        <section className="relative overflow-hidden border-b border-line bg-surf/45">
+          <div className="mx-auto grid min-h-[calc(100vh-72px)] max-w-7xl items-center gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:py-16">
+            <div className="reveal z-10 max-w-2xl">
+              <p className="inline-flex rounded-full border border-aqua/30 bg-white/70 px-4 py-2 text-sm font-bold text-aqua">
+                {hero.eyebrow}
+              </p>
+              <h1 className="mt-6 text-4xl font-black leading-tight text-ink sm:text-6xl lg:text-7xl">
                 {hero.title}
               </h1>
-              <div className="shimmer-line my-7 h-px w-40 bg-champagne" />
-              <p className="max-w-2xl text-lg leading-8 text-ink/76 sm:text-xl">{hero.lead}</p>
-              <div className="mt-9 flex flex-wrap gap-4">
-                <a
-                  href={hero.primaryCta.href}
-                  className="border border-ink bg-ink px-6 py-3 text-sm uppercase tracking-[0.18em] text-porcelain transition hover:bg-rosewood"
-                >
+              <p className="mt-6 text-lg leading-9 text-muted sm:text-xl">{hero.lead}</p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white shadow-lift transition hover:bg-night" href={hero.primaryCta.href}>
                   {hero.primaryCta.label}
                 </a>
-                <a
-                  href={hero.secondaryCta.href}
-                  className="border border-ink/20 bg-porcelain/60 px-6 py-3 text-sm uppercase tracking-[0.18em] text-ink transition hover:border-champagne"
-                >
+                <a className="rounded-full border border-ink/15 bg-white px-6 py-3 text-sm font-bold text-ink transition hover:border-aqua" href={hero.secondaryCta.href}>
                   {hero.secondaryCta.label}
                 </a>
               </div>
             </div>
+            <div className="reveal relative">
+              <div className="hero-frame overflow-hidden rounded-[2rem] border border-white bg-white shadow-lift">
+                <img className="h-full w-full object-cover" src={hero.image} alt="夏の室内で暑さ対策と節約術を実践する涼しげなイメージ" />
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="border-y border-ink/10 bg-porcelain">
-          <div className="mx-auto grid max-w-7xl grid-cols-2 px-5 sm:px-8 lg:grid-cols-4">
-            {stats.map((item) => (
-              <div key={item.label} className="reveal border-ink/10 py-8 odd:border-r lg:border-r lg:last:border-r-0">
-                <p className="font-serif text-4xl text-ink">{item.value}</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-ink/58">{item.label}</p>
-              </div>
+        <section id="basics" className="border-b border-line bg-white">
+          <div className="mx-auto grid max-w-7xl gap-px bg-line px-5 sm:px-8 md:grid-cols-4">
+            {metrics.map((item) => (
+              <article key={item.label} className="bg-white py-8 md:px-6">
+                <p className="text-4xl font-black text-aqua">{item.value}</p>
+                <h2 className="mt-3 font-bold">{item.label}</h2>
+                <p className="mt-2 text-sm leading-6 text-muted">{item.note}</p>
+              </article>
             ))}
           </div>
         </section>
 
-        <section id="tone" className="bg-porcelain px-5 py-24 sm:px-8 lg:py-32">
-          <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="reveal">
-              <p className="text-xs uppercase tracking-[0.28em] text-rosewood">{toneManner.eyebrow}</p>
-              <h2 className="mt-5 font-serif text-4xl leading-tight text-ink sm:text-5xl">{toneManner.title}</h2>
+        <section id="quick-start" className="px-5 py-16 sm:px-8 lg:py-24">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <p className="text-sm font-black text-coral">QUICK START</p>
+              <h2 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">今日から効く、最初の4手</h2>
             </div>
-            <div className="reveal">
-              <p className="max-w-3xl text-lg leading-9 text-ink/70">{toneManner.body}</p>
-              <div className="mt-10 grid gap-3 sm:grid-cols-2">
-                {toneManner.notes.map((note) => (
-                  <div key={note} className="flex items-center gap-4 border-t border-stone/50 py-4">
-                    <span className="h-px w-10 bg-champagne" aria-hidden="true" />
-                    <span className="text-sm uppercase tracking-[0.18em] text-ink/72">{note}</span>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {quickStart.map((item, index) => (
+                <article key={item} className="rounded-2xl border border-line bg-white p-6 shadow-sm">
+                  <span className="text-sm font-black text-leaf">0{index + 1}</span>
+                  <p className="mt-4 text-lg font-bold leading-8">{item}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-line bg-surf/35 px-5 py-16 text-ink sm:px-8 lg:py-24">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-sm font-black text-coral">SAVE TIPS</p>
+                <h2 className="mt-3 text-3xl font-black sm:text-5xl">節約ワザをカテゴリで確認</h2>
+              </div>
+              <p className="max-w-xl leading-8 text-muted">無理な我慢ではなく、冷房効率を上げる工夫を重ねます。</p>
+            </div>
+            <div className="mt-10 grid gap-5 md:grid-cols-2">
+              {savingCards.map((card) => (
+                <article key={card.title} className="rounded-2xl border border-line bg-white p-6 text-ink shadow-sm">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={`rounded-full border px-3 py-1 text-xs font-black ${accentClass[card.accent]}`}>
+                      {card.category}
+                    </span>
+                    <span className="rounded-full bg-lemon/30 px-3 py-1 text-xs font-bold">{card.impact}</span>
+                    <span className="rounded-full bg-line/60 px-3 py-1 text-xs font-bold">{card.cost}</span>
                   </div>
+                  <h3 className="mt-5 text-2xl font-black">{card.title}</h3>
+                  <p className="mt-4 leading-8 text-muted">{card.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {sections.map((section) => (
+          <section key={section.id} id={section.id} className="border-b border-line bg-paper px-5 py-16 sm:px-8 lg:py-24">
+            <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+              <div>
+                <p className="text-sm font-black text-aqua">{section.label}</p>
+                <h2 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">{section.title}</h2>
+                <p className="mt-5 leading-8 text-muted">{section.intro}</p>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {section.tips.map((tip) => (
+                  <article key={tip.name} className="rounded-2xl border border-line bg-white p-6">
+                    <h3 className="text-xl font-black">{tip.name}</h3>
+                    <p className="mt-3 leading-7 text-muted">{tip.detail}</p>
+                  </article>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ))}
 
-        <section className="grid bg-mist lg:grid-cols-2">
-          <div className="min-h-[520px] overflow-hidden">
-            <img
-              className="float-soft h-full w-full object-cover"
-              src={service.image}
-              alt="白いテーブルに磁器のカップと菓子が置かれ、奥に猫の気配がある"
-            />
-          </div>
-          <div className="flex items-center px-5 py-20 sm:px-8 lg:px-16">
-            <div className="reveal max-w-xl">
-              <p className="text-xs uppercase tracking-[0.28em] text-rosewood">{service.eyebrow}</p>
-              <h2 className="mt-5 font-serif text-4xl leading-tight text-ink sm:text-5xl">{service.title}</h2>
-              <p className="mt-6 text-base leading-8 text-ink/70">{service.body}</p>
-              <dl className="mt-10 divide-y divide-stone/60 border-y border-stone/60">
-                {service.menu.map((item) => (
-                  <div key={item.name} className="grid gap-3 py-5 sm:grid-cols-[1fr_auto]">
-                    <div>
-                      <dt className="font-serif text-xl text-ink">{item.name}</dt>
-                      <dd className="mt-1 text-sm text-ink/58">{item.detail}</dd>
-                    </div>
-                    <dd className="text-sm uppercase tracking-[0.16em] text-rosewood">{item.price}</dd>
-                  </div>
-                ))}
-              </dl>
+        <section id="checklist" className="bg-white px-5 py-16 text-ink sm:px-8 lg:py-24">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <p className="text-sm font-black text-coral">CHECKLIST</p>
+              <h2 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">できた項目をチェック</h2>
+              <div className="mt-8 max-w-sm rounded-2xl border border-line bg-paper p-5">
+                <div className="flex items-center justify-between text-sm font-bold">
+                  <span>進捗</span>
+                  <span>{progress}%</span>
+                </div>
+                <div className="mt-3 h-3 overflow-hidden rounded-full bg-line">
+                  <div className="h-full rounded-full bg-leaf transition-all" style={{ width: `${progress}%` }} />
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
-
-        <section id="residents" className="bg-porcelain px-5 py-24 sm:px-8 lg:py-32">
-          <div className="mx-auto max-w-7xl">
-            <div className="reveal max-w-3xl">
-              <p className="text-xs uppercase tracking-[0.28em] text-rosewood">猫たち</p>
-              <h2 className="mt-5 font-serif text-4xl leading-tight text-ink sm:text-5xl">
-                演出ではなく、そこにいる気配。
-              </h2>
-            </div>
-            <div className="mt-12 grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                {residentCats.map((cat) => (
-                  <button
-                    key={cat.name}
-                    type="button"
-                    onClick={() => setActiveCat(cat)}
-                    className={`reveal border px-5 py-4 text-left transition ${
-                      activeCat.name === cat.name
-                        ? "border-champagne bg-ivory text-ink"
-                        : "border-stone/50 bg-transparent text-ink/64 hover:border-ink/30"
+            <div className="grid gap-3">
+              {checklist.map((item) => {
+                const checked = doneItems.includes(item);
+                return (
+                  <label
+                    key={item}
+                    className={`flex cursor-pointer items-center gap-4 rounded-2xl border p-5 text-left transition ${
+                      checked ? "border-leaf bg-leaf/10 text-ink" : "border-line bg-white text-ink hover:border-aqua"
                     }`}
                   >
-                    <span className="block font-serif text-2xl">{cat.name}</span>
-                    <span className="mt-1 block text-xs uppercase tracking-[0.18em]">{cat.role}</span>
-                  </button>
-                ))}
-              </div>
-              <article className="reveal border border-stone/50 bg-ivory p-8 sm:p-10">
-                <p className="text-xs uppercase tracking-[0.24em] text-rosewood">本日の気配</p>
-                <h3 className="mt-4 font-serif text-5xl text-ink">{activeCat.name}</h3>
-                <p className="mt-5 max-w-3xl text-lg leading-9 text-ink/70">{activeCat.summary}</p>
-                <div className="mt-10 grid gap-5 sm:grid-cols-3">
-                  {[
-                    ["居場所", activeCat.place],
-                    ["距離感", activeCat.mood],
-                    ["印象", activeCat.charm],
-                  ].map(([label, value]) => (
-                    <div key={label} className="border-t border-champagne/70 pt-4">
-                      <p className="text-xs uppercase tracking-[0.18em] text-ink/45">{label}</p>
-                      <p className="mt-2 font-serif text-xl text-ink">{value}</p>
-                    </div>
-                  ))}
-                </div>
-              </article>
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => toggleChecklist(item)}
+                      className="h-6 w-6 shrink-0 accent-leaf"
+                    />
+                    <span className="font-bold leading-7">{item}</span>
+                  </label>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        <section className="bg-ink px-5 py-24 text-porcelain sm:px-8 lg:py-32">
-          <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3">
-            {philosophy.map((card) => (
-              <article key={card.title} className="reveal border border-porcelain/14 p-8">
-                <p className="text-xs uppercase tracking-[0.26em] text-champagne">{card.kicker}</p>
-                <h3 className="mt-6 font-serif text-3xl leading-tight">{card.title}</h3>
-                <p className="mt-5 leading-8 text-porcelain/68">{card.body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="reservation" className="grid bg-ivory lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="min-h-[560px] overflow-hidden">
-            <img
-              className="h-full w-full object-cover"
-              src={reservation.image}
-              alt="猫が眠るラウンジ席と静かな予約席"
-            />
-          </div>
-          <div className="px-5 py-20 sm:px-8 lg:px-16">
-            <div className="reveal max-w-2xl">
-              <p className="text-xs uppercase tracking-[0.28em] text-rosewood">{reservation.eyebrow}</p>
-              <h2 className="mt-5 font-serif text-4xl leading-tight text-ink sm:text-5xl">{reservation.title}</h2>
-              <p className="mt-6 text-base leading-8 text-ink/70">{reservation.body}</p>
-            </div>
-            <form className="reveal mt-10 grid gap-5" onSubmit={handleReservationSubmit}>
-              <div className="grid gap-5 sm:grid-cols-2">
-                <label className="grid gap-2 text-sm uppercase tracking-[0.16em] text-ink/58">
-                  お名前
-                  <input className="border border-stone/60 bg-porcelain px-4 py-3 text-base normal-case tracking-normal text-ink outline-none focus:border-champagne" name="name" type="text" required />
-                </label>
-                <label className="grid gap-2 text-sm uppercase tracking-[0.16em] text-ink/58">
-                  メール
-                  <input className="border border-stone/60 bg-porcelain px-4 py-3 text-base normal-case tracking-normal text-ink outline-none focus:border-champagne" name="email" type="email" required />
-                </label>
-              </div>
-              <div className="grid gap-5 sm:grid-cols-3">
-                <label className="grid gap-2 text-sm uppercase tracking-[0.16em] text-ink/58">
-                  希望日
-                  <input className="border border-stone/60 bg-porcelain px-4 py-3 text-base normal-case tracking-normal text-ink outline-none focus:border-champagne" name="date" type="date" required />
-                </label>
-                <label className="grid gap-2 text-sm uppercase tracking-[0.16em] text-ink/58">
-                  時間
-                  <select className="border border-stone/60 bg-porcelain px-4 py-3 text-base normal-case tracking-normal text-ink outline-none focus:border-champagne" name="time" required>
-                    {reservation.times.map((time) => (
-                      <option key={time}>{time}</option>
-                    ))}
-                  </select>
-                </label>
-                <label className="grid gap-2 text-sm uppercase tracking-[0.16em] text-ink/58">
-                  プラン
-                  <select className="border border-stone/60 bg-porcelain px-4 py-3 text-base normal-case tracking-normal text-ink outline-none focus:border-champagne" name="plan" required>
-                    {reservation.plans.map((plan) => (
-                      <option key={plan}>{plan}</option>
-                    ))}
-                  </select>
-                </label>
-              </div>
-              <label className="grid gap-2 text-sm uppercase tracking-[0.16em] text-ink/58">
-                ご要望
-                <textarea className="min-h-32 border border-stone/60 bg-porcelain px-4 py-3 text-base normal-case tracking-normal text-ink outline-none focus:border-champagne" name="request" />
-              </label>
-              <button className="mt-2 border border-ink bg-ink px-6 py-4 text-sm uppercase tracking-[0.2em] text-porcelain transition hover:bg-rosewood" type="submit">
-                予約内容を送信
-              </button>
-              {reservationStatus ? (
-                <p className="border-l border-champagne bg-porcelain px-4 py-3 text-sm leading-6 text-ink/70" role="status" aria-live="polite">
-                  {reservationStatus}
-                </p>
-              ) : null}
-            </form>
+        <section className="bg-coral px-5 py-10 text-white sm:px-8">
+          <div className="mx-auto max-w-7xl">
+            <p className="text-sm font-black">熱中症のサインに注意</p>
+            <p className="mt-3 max-w-5xl leading-8 text-white/92">{emergency}</p>
           </div>
         </section>
       </main>
@@ -255,4 +215,4 @@ function App() {
   );
 }
 
-window.MaisonNekoApp = App;
+window.SummerSavingApp = App;

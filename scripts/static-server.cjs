@@ -42,5 +42,5 @@ http
     });
   })
   .listen(port, "127.0.0.1", () => {
-    console.log(`Maison Neko static server: http://127.0.0.1:${port}`);
+    console.log(`Summer saving guide static server: http://127.0.0.1:${port}`);
   });
